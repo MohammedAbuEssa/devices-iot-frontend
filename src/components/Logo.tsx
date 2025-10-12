@@ -20,7 +20,7 @@ export function Logo({ size = 'md', className = '', showText = false }: LogoProp
   };
 
   // Choose logo based on current theme
-  const logoSrc = actualTheme === 'dark' ? '/darkLogo.svg' : '/lightLogo.svg';
+  const logoSrc = actualTheme === 'dark' ? '/darkLogo.png' : '/lightLogo.png';
 
   // Reset states when theme changes
   useEffect(() => {
