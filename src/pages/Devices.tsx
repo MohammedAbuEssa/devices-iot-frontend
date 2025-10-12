@@ -7,6 +7,7 @@ import { Label } from '../components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { DeviceActions } from '../components/DeviceActions';
 import { useDevices, useCreateDevice, useUpdateDevice, useDeleteDevice } from '../api/hooks';
+import { useToast } from '../hooks/use-toast';
 import type { 
   CreateDeviceRequest, 
   UpdateDeviceRequest, 
@@ -33,8 +34,9 @@ import {
   LOCATIONS, 
   PAGINATION_SIZE,
   getDeviceTypeLabel, 
-  getLocationLabel 
+  getLocationLabel
 } from '../types/enums';
+import type { DeviceType, Location } from '../types/enums';
 
 const DeviceCard = ({ device, onDelete, onEdit }: DeviceCardProps) => {
 
@@ -80,21 +82,32 @@ const DeviceCard = ({ device, onDelete, onEdit }: DeviceCardProps) => {
 const AddDeviceDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) => {
   const [formData, setFormData] = useState<CreateDeviceRequest>({
     name: '',
-    type: '' as any,
-    location: '' as any,
+    type: '' as DeviceType,
+    location: '' as Location,
   });
   const createDevice = useCreateDevice();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await createDevice.mutateAsync(formData);
-      setFormData({ name: '', type: '' as any, location: '' as any });
+      setFormData({ name: '', type: '' as DeviceType, location: '' as Location });
       onOpenChange(false);
       navigate('/devices');
+      toast({
+        title: "Device Added Successfully",
+        description: `${formData.name} has been added to your device list.`,
+        variant: "success",
+      });
     } catch (error) {
       console.error('Failed to create device:', error);
+      toast({
+        title: "Failed to Add Device",
+        description: "There was an error adding the device. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -123,7 +136,7 @@ const AddDeviceDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange: 
             <select
               id="type"
               value={formData.type}
-              onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value as DeviceType })}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
@@ -140,7 +153,7 @@ const AddDeviceDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange: 
             <select
               id="location"
               value={formData.location}
-              onChange={(e) => setFormData({ ...formData, location: e.target.value as any })}
+              onChange={(e) => setFormData({ ...formData, location: e.target.value as Location })}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
@@ -177,10 +190,11 @@ const EditDeviceDialog = ({
 }) => {
   const [formData, setFormData] = useState<UpdateDeviceRequest>({
     name: '',
-    type: '' as any,
-    location: '' as any,
+    type: '' as DeviceType,
+    location: '' as Location,
   });
   const updateDevice = useUpdateDevice();
+  const { toast } = useToast();
 
   // Update form data when device changes
   React.useEffect(() => {
@@ -200,8 +214,18 @@ const EditDeviceDialog = ({
     try {
       await updateDevice.mutateAsync({ id: device.id, data: formData });
       onOpenChange(false);
+      toast({
+        title: "Device Updated Successfully",
+        description: `${formData.name || device.name} has been updated.`,
+        variant: "success",
+      });
     } catch (error) {
       console.error('Failed to update device:', error);
+      toast({
+        title: "Failed to Update Device",
+        description: "There was an error updating the device. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -232,7 +256,7 @@ const EditDeviceDialog = ({
             <select
               id="edit-type"
               value={formData.type}
-              onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value as DeviceType })}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
@@ -249,7 +273,7 @@ const EditDeviceDialog = ({
             <select
               id="edit-location"
               value={formData.location}
-              onChange={(e) => setFormData({ ...formData, location: e.target.value as any })}
+              onChange={(e) => setFormData({ ...formData, location: e.target.value as Location })}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
@@ -344,7 +368,7 @@ const FilterControls = ({
                   value={filters.type || ''}
                   onChange={(e) => onFiltersChange({ 
                     ...filters, 
-                    type: e.target.value as any || undefined, 
+                    type: e.target.value as DeviceType || undefined, 
                     page: 1 
                   })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -365,7 +389,7 @@ const FilterControls = ({
                   value={filters.location || ''}
                   onChange={(e) => onFiltersChange({ 
                     ...filters, 
-                    location: e.target.value as any || undefined, 
+                    location: e.target.value as Location || undefined, 
                     page: 1 
                   })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -386,7 +410,7 @@ const FilterControls = ({
                   value={filters.sortBy || 'created_at'}
                   onChange={(e) => onFiltersChange({ 
                     ...filters, 
-                    sortBy: e.target.value as any, 
+                    sortBy: e.target.value as 'created_at' | 'updated_at' | 'name' | 'type' | 'location', 
                     page: 1 
                   })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -406,7 +430,7 @@ const FilterControls = ({
                   value={filters.sortOrder || 'desc'}
                   onChange={(e) => onFiltersChange({ 
                     ...filters, 
-                    sortOrder: e.target.value as any, 
+                    sortOrder: e.target.value as 'asc' | 'desc', 
                     page: 1 
                   })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -490,6 +514,7 @@ export default function Devices() {
   
   const { data: devicesResponse, isLoading, error } = useDevices(filters);
   const deleteDevice = useDeleteDevice();
+  const { toast } = useToast();
 
   // Auto-open dialog when navigating to /devices/new
   useEffect(() => {
@@ -507,11 +532,24 @@ export default function Devices() {
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this device?')) {
+    const deviceToDelete = devicesResponse?.data.find(device => device.id === id);
+    const deviceName = deviceToDelete?.name || 'Device';
+    
+    if (window.confirm(`Are you sure you want to delete ${deviceName}?`)) {
       try {
         await deleteDevice.mutateAsync(id);
+        toast({
+          title: "Device Deleted Successfully",
+          description: `${deviceName} has been removed from your device list.`,
+          variant: "success",
+        });
       } catch (error) {
         console.error('Failed to delete device:', error);
+        toast({
+          title: "Failed to Delete Device",
+          description: "There was an error deleting the device. Please try again.",
+          variant: "destructive",
+        });
       }
     }
   };

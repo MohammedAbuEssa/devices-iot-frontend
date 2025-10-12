@@ -34,6 +34,7 @@ import type {
   SensorDataChartProps,
   SensorData 
 } from '../types';
+import { useToast } from '../hooks/use-toast';
 
 const SensorDataChart = ({ data, type }: SensorDataChartProps) => {
   // Filter data by sensor type and transform for chart
@@ -87,6 +88,7 @@ const AddSensorDataDialog = ({
     current: undefined,
   });
   const addSensorData = useAddSensorData();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,8 +102,18 @@ const AddSensorDataDialog = ({
         current: undefined,
       });
       onOpenChange(false);
+      toast({
+        title: "Sensor Data Added Successfully",
+        description: "New sensor readings have been recorded for this device.",
+        variant: "success",
+      });
     } catch (error) {
       console.error('Failed to add sensor data:', error);
+      toast({
+        title: "Failed to Add Sensor Data",
+        description: "There was an error adding sensor data. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 

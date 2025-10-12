@@ -1,4 +1,4 @@
-import { DeviceType, Location, DeviceStatus } from './enums';
+import type { DeviceType, Location, DeviceStatus } from './enums';
 
 export interface Device {
   id: string;

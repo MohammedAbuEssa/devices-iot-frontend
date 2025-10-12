@@ -14,6 +14,7 @@ import { Button } from './components/ui/button';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
 import { Logo } from './components/Logo';
+import { Toaster } from './components/ui/toaster';
 import { useDynamicFavicon } from './hooks/useDynamicFavicon';
 import Dashboard from './pages/Dashboard';
 import Devices from './pages/Devices';
@@ -149,6 +150,7 @@ function App() {
         <Router>
           <Sidebar />
         </Router>
+        <Toaster />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ThemeProvider>

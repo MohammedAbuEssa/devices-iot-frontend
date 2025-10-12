@@ -1,16 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { deviceApi, sensorDataApi, analyticsApi } from './client';
 import type {
-  Device,
-  SensorData,
-  DeviceStats,
-  CreateDeviceRequest,
   UpdateDeviceRequest,
   CreateSensorDataRequest,
   SensorDataQueryParams,
-  AnalyticsData,
   DeviceFilters,
-  PaginatedResponse,
 } from '../types';
 
 // Device hooks
