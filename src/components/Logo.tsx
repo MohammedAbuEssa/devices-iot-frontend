@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface LogoProps {
@@ -9,6 +9,7 @@ interface LogoProps {
 
 export function Logo({ size = 'md', className = '', showText = false }: LogoProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const { actualTheme } = useTheme();
   
   const sizeClasses = {
@@ -20,39 +21,41 @@ export function Logo({ size = 'md', className = '', showText = false }: LogoProp
 
   // Choose logo based on current theme
   const logoSrc = actualTheme === 'dark' ? '/darkLogo.svg' : '/lightLogo.svg';
-  
-  // Fallback logo if main logos fail
-  const fallbackLogoSrc = '/vite.svg';
+
+  // Reset states when theme changes
+  useEffect(() => {
+    setIsLoaded(false);
+    setHasError(false);
+  }, [actualTheme]);
 
   // Reset loading state when theme changes
   const handleImageLoad = () => {
     setIsLoaded(true);
+    setHasError(false);
   };
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const target = e.target as HTMLImageElement;
-    if (target.src !== fallbackLogoSrc) {
-      target.src = fallbackLogoSrc;
-    } else {
-      setIsLoaded(true); // Show placeholder if even fallback fails
-    }
+  const handleImageError = () => {
+    setHasError(true);
+    setIsLoaded(true); // Hide logo completely if image fails
   };
 
   return (
     <div className={`flex items-center ${className}`}>
       <div className="relative">
-        <img 
-          src={logoSrc}
-          alt="IoT Dashboard Logo" 
-          className={`${sizeClasses[size]} object-contain transition-all duration-200 hover:scale-105 ${
-            isLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
-          onLoad={handleImageLoad}
-          onError={handleImageError}
-          key={actualTheme} // Force re-render when theme changes
-          loading="eager"
-        />
-        {!isLoaded && (
+        {!hasError && (
+          <img 
+            src={logoSrc}
+            alt="IoT Dashboard Logo" 
+            className={`${sizeClasses[size]} object-contain transition-all duration-200 hover:scale-105 ${
+              isLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            key={actualTheme} // Force re-render when theme changes
+            loading="eager"
+          />
+        )}
+        {!isLoaded && !hasError && (
           <div className={`${sizeClasses[size]} bg-muted animate-pulse rounded`} />
         )}
       </div>
