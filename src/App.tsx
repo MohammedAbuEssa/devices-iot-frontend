@@ -46,18 +46,19 @@ function Sidebar() {
   return (
     <div className="flex h-screen bg-background">
       {/* Mobile sidebar overlay */}
-      {sidebarOpen && (
-        <div 
-          className="fixed inset-0 z-40 bg-gray-900/90 dark:bg-black/95 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+      <div 
+        className={cn(
+          "fixed inset-0 z-40 bg-gray-900/90 dark:bg-black/95 lg:hidden transition-opacity duration-300 ease-in-out",
+          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        onClick={() => setSidebarOpen(false)}
+      />
 
       {/* Sidebar */}
       <div 
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 shadow-lg transform transition-all duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col border-r",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          "fixed inset-y-0 left-0 z-50 w-64 shadow-lg transform transition-all duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col border-r",
+          sidebarOpen ? "translate-x-0 scale-100" : "-translate-x-full scale-95"
         )}
         style={{
           backgroundColor: 'hsl(var(--sidebar-bg))',
@@ -71,7 +72,7 @@ function Sidebar() {
           <Button
             variant="ghost"
             size="sm"
-            className="lg:hidden"
+            className="lg:hidden transition-all duration-200 hover:scale-110"
             onClick={() => setSidebarOpen(false)}
           >
             <X className="h-5 w-5" />
@@ -89,9 +90,9 @@ function Sidebar() {
                 to={item.href}
                 onClick={() => setSidebarOpen(false)}
                 className={cn(
-                  'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 relative',
+                  'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all duration-300 ease-in-out relative transform hover:scale-105',
                   isActive
-                    ? 'bg-gray-800 text-white border-l-4 border-gray-600 shadow-sm'
+                    ? 'bg-gray-800 text-white border-l-4 border-gray-600 shadow-sm scale-105'
                     : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-l-4 hover:border-accent-foreground/20 hover:shadow-md'
                 )}
               >
@@ -111,7 +112,7 @@ function Sidebar() {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden lg:ml-0">
+      <div className="flex-1 flex flex-col overflow-hidden lg:ml-0 transition-all duration-300 ease-in-out">
         {/* Mobile header */}
         <div className="lg:hidden bg-card shadow-sm border-b border-border px-4 py-3">
           <div className="flex items-center justify-between">
@@ -119,6 +120,7 @@ function Sidebar() {
               variant="ghost"
               size="sm"
               onClick={() => setSidebarOpen(true)}
+              className="transition-all duration-200 hover:scale-110"
             >
               <Menu className="h-5 w-5" />
             </Button>
