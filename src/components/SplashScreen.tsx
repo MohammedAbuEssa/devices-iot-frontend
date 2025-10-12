@@ -21,8 +21,6 @@ export function SplashScreen({ onComplete, duration = 3000 }: SplashScreenProps)
     // Start exit animation after duration
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
-      debugger;
-
       // Call onComplete after animation finishes
       setTimeout(() => {
         onComplete?.();
