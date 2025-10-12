@@ -20,14 +20,22 @@ export function Logo({ size = 'md', className = '', showText = false }: LogoProp
 
   // Choose logo based on current theme
   const logoSrc = actualTheme === 'dark' ? '/darkLogo.svg' : '/lightLogo.svg';
+  
+  // Fallback logo if main logos fail
+  const fallbackLogoSrc = '/vite.svg';
 
   // Reset loading state when theme changes
   const handleImageLoad = () => {
     setIsLoaded(true);
   };
 
-  const handleImageError = () => {
-    setIsLoaded(true); // Still show something even if image fails
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    if (target.src !== fallbackLogoSrc) {
+      target.src = fallbackLogoSrc;
+    } else {
+      setIsLoaded(true); // Show placeholder if even fallback fails
+    }
   };
 
   return (
@@ -42,6 +50,7 @@ export function Logo({ size = 'md', className = '', showText = false }: LogoProp
           onLoad={handleImageLoad}
           onError={handleImageError}
           key={actualTheme} // Force re-render when theme changes
+          loading="eager"
         />
         {!isLoaded && (
           <div className={`${sizeClasses[size]} bg-muted animate-pulse rounded`} />
