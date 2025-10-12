@@ -14,6 +14,7 @@ import { Button } from './components/ui/button';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
 import { Logo } from './components/Logo';
+import { SplashScreen } from './components/SplashScreen';
 import { Toaster } from './components/ui/toaster';
 import { useDynamicFavicon } from './hooks/useDynamicFavicon';
 import Dashboard from './pages/Dashboard';
@@ -138,18 +139,31 @@ function Sidebar() {
             </Routes>
           </div>
         </main>
+        </div>
       </div>
-    </div>
   );
 }
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <Router>
-          <Sidebar />
-        </Router>
+        {/* Splash Screen - covers everything */}
+        {showSplash && (
+          <SplashScreen 
+            onComplete={() => setShowSplash(false)}
+            duration={3000}
+          />
+        )}
+        
+        {/* Main App - only shows after splash */}
+        {!showSplash && (
+          <Router>
+            <Sidebar />
+          </Router>
+        )}
         <Toaster />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
