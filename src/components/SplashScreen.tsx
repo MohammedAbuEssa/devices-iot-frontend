@@ -12,7 +12,6 @@ export function SplashScreen({ onComplete, duration = 3000 }: SplashScreenProps)
   const [showContent, setShowContent] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const { actualTheme } = useTheme();
-
   useEffect(() => {
     // Show content after curtain animation starts
     const contentTimer = setTimeout(() => {
@@ -22,6 +21,8 @@ export function SplashScreen({ onComplete, duration = 3000 }: SplashScreenProps)
     // Start exit animation after duration
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
+      debugger;
+
       // Call onComplete after animation finishes
       setTimeout(() => {
         onComplete?.();

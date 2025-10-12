@@ -2,6 +2,11 @@
 
 A modern, responsive React dashboard for managing and monitoring IoT devices and their sensor data. Built with TypeScript, React Query, Shadcn UI, and containerized with Docker.
 
+
+![IoT Dashboard Splash Screen](./public/mainImage.jpeg)
+
+
+
 ## Features
 
 - **Device Management**: Register, view, edit, and delete IoT devices
@@ -35,7 +40,7 @@ A modern, responsive React dashboard for managing and monitoring IoT devices and
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:MohammedAbuEssa/devices-iot-frontend.git
    cd devices-iot-frontend
    ```
 
