@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # Frontend React Application
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:80"
+    environment:
+      - NODE_ENV=production
+      - VITE_API_BASE_URL=http://localhost:3000
+    networks:
+      - iot-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  iot-network:
+    driver: bridge
