@@ -134,7 +134,6 @@ export interface AnalyticsData {
   recentActivity: RecentActivity[];
 }
 
-// New API Filter Types
 export interface DeviceFilters {
   page?: number;
   limit?: number;
@@ -166,7 +165,6 @@ export interface SensorDataQueryParams {
   sensorType?: DeviceType;
 }
 
-// Chart Data Types
 export interface ChartDataPoint {
   time: string;
   value: number;
@@ -184,7 +182,6 @@ export interface TransformedSensorData {
   timestamp: string;
 }
 
-// Component Props Types
 export interface DeviceCardProps {
   device: Device;
   onDelete?: (id: string) => void;

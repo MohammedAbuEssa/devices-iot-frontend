@@ -153,28 +153,27 @@ const LocationChart = ({ locations }: LocationChartProps) => {
     );
   }
 
-  // Color palette for different locations
   const colors = [
-    '#3b82f6', // blue-500
-    '#10b981', // emerald-500
-    '#f59e0b', // amber-500
-    '#ef4444', // red-500
-    '#8b5cf6', // violet-500
-    '#06b6d4', // cyan-500
-    '#84cc16', // lime-500
-    '#f97316', // orange-500
-    '#ec4899', // pink-500
-    '#6366f1', // indigo-500
-    '#14b8a6', // teal-500
-    '#eab308', // yellow-500
-    '#dc2626', // red-600
-    '#7c3aed', // violet-600
-    '#059669', // emerald-600
-    '#0891b2', // cyan-600
-    '#65a30d', // lime-600
-    '#ea580c', // orange-600
-    '#db2777', // pink-600
-    '#4f46e5', // indigo-600
+    '#3b82f6',
+    '#10b981',
+    '#f59e0b',
+    '#ef4444',
+    '#8b5cf6',
+    '#06b6d4',
+    '#84cc16',
+    '#f97316',
+    '#ec4899',
+    '#6366f1',
+    '#14b8a6',
+    '#eab308',
+    '#dc2626',
+    '#7c3aed',
+    '#059669',
+    '#0891b2',
+    '#65a30d',
+    '#ea580c',
+    '#db2777',
+    '#4f46e5',
   ];
 
   const data = locations.map((item, index) => ({
@@ -224,7 +223,6 @@ export default function Analytics() {
         </div>
       </div>
 
-      {/* Overview Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -285,9 +283,7 @@ export default function Analytics() {
         </Card>
       </div>
 
-      {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        {/* Device Status Distribution */}
         <Card>
           <CardHeader>
             <CardTitle>Device Status Distribution</CardTitle>
@@ -298,7 +294,6 @@ export default function Analytics() {
           </CardContent>
         </Card>
 
-        {/* Device Types */}
         <Card>
           <CardHeader>
             <CardTitle>Device Types</CardTitle>
@@ -310,7 +305,6 @@ export default function Analytics() {
         </Card>
       </div>
 
-      {/* Location Distribution */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
@@ -325,7 +319,6 @@ export default function Analytics() {
       </Card>
 
 
-      {/* Recent Activity */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
@@ -361,7 +354,6 @@ export default function Analytics() {
         </CardContent>
       </Card>
 
-      {/* Performance Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {analyticsData?.distributions.sensorTypes.slice(0, 3).map((sensor) => (
           <Card key={sensor.sensor_type}>

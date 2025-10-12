@@ -196,7 +196,6 @@ const EditDeviceDialog = ({
   const updateDevice = useUpdateDevice();
   const { toast } = useToast();
 
-  // Update form data when device changes
   React.useEffect(() => {
     if (device) {
       setFormData({
@@ -322,7 +321,6 @@ const FilterControls = ({
     <Card>
       <CardContent className="pt-6">
         <div className="space-y-4">
-          {/* Search Bar */}
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
@@ -358,7 +356,6 @@ const FilterControls = ({
             </div>
           </div>
 
-          {/* Advanced Filters */}
           {showFilters && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
               <div className="space-y-2">
@@ -516,14 +513,12 @@ export default function Devices() {
   const deleteDevice = useDeleteDevice();
   const { toast } = useToast();
 
-  // Auto-open dialog when navigating to /devices/new
   useEffect(() => {
     if (location.pathname === '/devices/new') {
       setShowAddDialog(true);
     }
   }, [location.pathname]);
 
-  // Handle dialog close - navigate back to /devices
   const handleDialogClose = (open: boolean) => {
     setShowAddDialog(open);
     if (!open && location.pathname === '/devices/new') {
@@ -597,17 +592,14 @@ export default function Devices() {
         </Button>
       </div>
 
-      {/* Filters */}
       <FilterControls filters={filters} onFiltersChange={setFilters} />
 
-      {/* Devices Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         {devices.map((device) => (
           <DeviceCard key={device.id} device={device} onDelete={handleDelete} onEdit={handleEdit} />
         ))}
       </div>
 
-      {/* Pagination */}
       <PaginationControls pagination={pagination!} onPageChange={handlePageChange} />
 
       {devices.length === 0 && (

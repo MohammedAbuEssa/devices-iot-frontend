@@ -25,7 +25,7 @@ import Analytics from './pages/Analytics';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
+      staleTime: 5 * 60 * 1000,
       refetchOnWindowFocus: false,
     },
   },
@@ -41,12 +41,10 @@ function Sidebar() {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   
-  // Update favicon based on theme
   useDynamicFavicon();
 
   return (
     <div className="flex h-screen bg-background">
-      {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div 
           className="fixed inset-0 z-40 bg-gray-900/90 dark:bg-black/95 lg:hidden"
@@ -54,7 +52,6 @@ function Sidebar() {
         />
       )}
 
-      {/* Sidebar */}
       <div 
         className={cn(
           "fixed inset-y-0 left-0 z-50 w-64 shadow-lg transform transition-all duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col border-r",
@@ -111,9 +108,7 @@ function Sidebar() {
         </div>
       </div>
 
-      {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden lg:ml-0">
-        {/* Mobile header */}
         <div className="lg:hidden bg-card shadow-sm border-b border-border px-4 py-3">
           <div className="flex items-center justify-between">
             <Button
@@ -124,7 +119,6 @@ function Sidebar() {
               <Menu className="h-5 w-5" />
             </Button>
             <Logo size="md" showText={true} />
-            <div className="w-8" /> {/* Spacer for centering */}
           </div>
         </div>
 
@@ -150,7 +144,6 @@ function App() {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        {/* Splash Screen - covers everything */}
         {showSplash && (
           <SplashScreen 
             onComplete={() => setShowSplash(false)}
@@ -158,7 +151,6 @@ function App() {
           />
         )}
         
-        {/* Main App - only shows after splash */}
         {!showSplash && (
           <Router>
             <Sidebar />

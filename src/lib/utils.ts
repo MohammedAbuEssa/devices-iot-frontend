@@ -6,10 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-/**
- * Safely formats a date string or Date object using dayjs format function.
- * Returns a fallback string if the date is invalid, null, or undefined.
- */
 export function safeFormatDate(
   date: string | Date | null | undefined,
   formatString: string,

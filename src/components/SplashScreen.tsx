@@ -13,18 +13,15 @@ export function SplashScreen({ onComplete, duration = 3000 }: SplashScreenProps)
   const [isExiting, setIsExiting] = useState(false);
   const { actualTheme } = useTheme();
   useEffect(() => {
-    // Show content after curtain animation starts
     const contentTimer = setTimeout(() => {
       setShowContent(true);
     }, 800);
 
-    // Start exit animation after duration
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
-      // Call onComplete after animation finishes
       setTimeout(() => {
         onComplete?.();
-      }, 800); // Match animation duration
+      }, 800);
     }, duration);
 
     return () => {
@@ -39,7 +36,6 @@ export function SplashScreen({ onComplete, duration = 3000 }: SplashScreenProps)
       animate={isExiting ? { y: '-100%', opacity: 0 } : { y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-        {/* Curtain Background - static background */}
         <div 
           className={`absolute inset-0 ${
             actualTheme === 'dark' 
@@ -48,7 +44,6 @@ export function SplashScreen({ onComplete, duration = 3000 }: SplashScreenProps)
           }`}
         />
         
-        {/* Content - appears after curtain settles */}
         <AnimatePresence>
           {showContent && (
             <motion.div 
@@ -73,7 +68,6 @@ export function SplashScreen({ onComplete, duration = 3000 }: SplashScreenProps)
                 ease: "easeOut"
               }}
             >
-              {/* Logo */}
               <motion.div 
                 className="mb-8"
                 initial={{ scale: 0.5, opacity: 0 }}
@@ -100,7 +94,6 @@ export function SplashScreen({ onComplete, duration = 3000 }: SplashScreenProps)
                 </motion.div>
               </motion.div>
               
-              {/* Project Name */}
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 30 }}
@@ -162,7 +155,6 @@ export function SplashScreen({ onComplete, duration = 3000 }: SplashScreenProps)
                 </motion.p>
               </motion.div>
               
-              {/* Loading Animation */}
               <motion.div 
                 className="mt-12 flex space-x-2"
                 initial={{ opacity: 0, y: 20 }}

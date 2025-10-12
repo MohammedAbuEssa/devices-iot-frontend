@@ -37,7 +37,6 @@ import type {
 import { useToast } from '../hooks/use-toast';
 
 const SensorDataChart = ({ data, type }: SensorDataChartProps) => {
-  // Filter data by sensor type and transform for chart
   const chartData: ChartDataPoint[] = data?.filter(item => item.sensor_type === type)
     .map(item => ({
       time: safeFormatDate(item.timestamp, 'HH:mm', '--:--'),
@@ -202,7 +201,6 @@ export default function DeviceDetails() {
   const { id } = useParams<{ id: string }>();
   const [showAddDialog, setShowAddDialog] = useState(false);
 
-  // Memoize the start date to prevent infinite re-renders
   const startDate = useMemo(() => subDays(new Date(), 1).toISOString(), []);
 
   const { data: device, isLoading: deviceLoading } = useDevice(id!);
@@ -211,7 +209,6 @@ export default function DeviceDetails() {
     limit: 100
   });
 
-  // Transform sensor data array into object format for easier access
   const transformSensorData = (data: SensorData[]): TransformedSensorData => {
     if (!data || !Array.isArray(data)) return { timestamp: '' };
     
@@ -219,16 +216,14 @@ export default function DeviceDetails() {
     data.forEach(item => {
       if (item.sensor_type && item.value !== undefined) {
         transformed[item.sensor_type] = item.value;
-        transformed.timestamp = item.timestamp; // Use the latest timestamp
+        transformed.timestamp = item.timestamp;
       }
     });
     return transformed;
   };
 
-  // Use sensorData (from /data endpoint) for current readings since we know it works
   const currentReadings = transformSensorData(sensorData || []);
 
-  // Debug logging
   console.log('Sensor Data:', sensorData);
   console.log('Current Readings:', currentReadings);
 
@@ -257,7 +252,6 @@ export default function DeviceDetails() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex flex-col sm:flex-row  sm:items-center gap-4">
           <Button variant="noBg" asChild className="w-full sm:w-auto bg-none justify-start">
@@ -279,7 +273,6 @@ export default function DeviceDetails() {
         </div>
       </div>
 
-      {/* Device Info */}
       <Card>
         <CardHeader>
           <CardTitle>Device Information</CardTitle>
@@ -311,7 +304,6 @@ export default function DeviceDetails() {
         </CardContent>
       </Card>
 
-      {/* Current Readings */}
       {Object.keys(currentReadings).length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {currentReadings.temperature && (
@@ -373,7 +365,6 @@ export default function DeviceDetails() {
         </div>
       )}
 
-      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {currentReadings.temperature && (
           <Card>
@@ -403,7 +394,6 @@ export default function DeviceDetails() {
         )}
       </div>
 
-      {/* Statistics */}
    
 
       <AddSensorDataDialog 

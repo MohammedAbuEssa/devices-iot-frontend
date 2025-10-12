@@ -19,16 +19,13 @@ export function Logo({ size = 'md', className = '', showText = false }: LogoProp
     xl: 'h-20 w-20'
   };
 
-  // Choose logo based on current theme
   const logoSrc = actualTheme === 'dark' ? '/darkLogo.svg' : '/lightLogo.svg';
 
-  // Reset states when theme changes
   useEffect(() => {
     setIsLoaded(false);
     setHasError(false);
   }, [actualTheme]);
 
-  // Reset loading state when theme changes
   const handleImageLoad = () => {
     setIsLoaded(true);
     setHasError(false);
@@ -36,7 +33,6 @@ export function Logo({ size = 'md', className = '', showText = false }: LogoProp
 
   const handleImageError = () => {
     setHasError(true);
-    setIsLoaded(true); // Hide logo completely if image fails
   };
 
   return (
@@ -51,7 +47,6 @@ export function Logo({ size = 'md', className = '', showText = false }: LogoProp
             }`}
             onLoad={handleImageLoad}
             onError={handleImageError}
-            key={actualTheme} // Force re-render when theme changes
             loading="eager"
           />
         )}

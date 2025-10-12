@@ -7,7 +7,6 @@ import type {
   DeviceFilters,
 } from '../types';
 
-// Device hooks
 export const useDevices = (filters?: DeviceFilters) => {
   return useQuery({
     queryKey: ['devices', filters],
@@ -58,7 +57,6 @@ export const useDeleteDevice = () => {
   });
 };
 
-// Sensor Data hooks
 export const useSensorData = (deviceId: string, params?: SensorDataQueryParams) => {
   return useQuery({
     queryKey: ['sensorData', deviceId, params],
@@ -72,7 +70,6 @@ export const useLatestReading = (deviceId: string) => {
     queryKey: ['latestReading', deviceId],
     queryFn: () => sensorDataApi.getLatestReading(deviceId),
     enabled: !!deviceId,
-    refetchInterval: 30000, // Refetch every 30 seconds
   });
 };
 
@@ -98,11 +95,9 @@ export const useAddSensorData = () => {
   });
 };
 
-// Analytics hooks
 export const useAnalyticsOverview = () => {
   return useQuery({
     queryKey: ['analytics', 'overview'],
     queryFn: analyticsApi.getAnalyticsOverview,
-    refetchInterval: 60000, // Refetch every minute
   });
 };

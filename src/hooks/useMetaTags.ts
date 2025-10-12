@@ -22,22 +22,18 @@ export function useMetaTags({
     const logoSrc = actualTheme === 'dark' ? '/darkLogo.svg' : '/lightLogo.svg';
     const finalImage = image || logoSrc;
 
-    // Update document title
     document.title = title;
 
-    // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
     if (metaDescription) {
       metaDescription.content = description;
     }
 
-    // Update meta keywords
     const metaKeywords = document.querySelector('meta[name="keywords"]') as HTMLMetaElement;
     if (metaKeywords) {
       metaKeywords.content = keywords;
     }
 
-    // Update Open Graph tags
     const ogTitle = document.querySelector('meta[property="og:title"]') as HTMLMetaElement;
     if (ogTitle) {
       ogTitle.content = title;
@@ -58,7 +54,6 @@ export function useMetaTags({
       ogUrl.content = url;
     }
 
-    // Update Twitter tags
     const twitterTitle = document.querySelector('meta[property="twitter:title"]') as HTMLMetaElement;
     if (twitterTitle) {
       twitterTitle.content = title;

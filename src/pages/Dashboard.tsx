@@ -148,7 +148,6 @@ export default function Dashboard() {
         <p className="text-sm sm:text-base text-muted-foreground">Monitor your IoT devices and sensor data</p>
       </div>
 
-      {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatCard
           title="Total Devices"
@@ -178,7 +177,6 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Additional Analytics Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <StatCard
           title="Active Devices (7d)"
@@ -200,7 +198,6 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Recent Devices */}
       <div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground">Recent Devices</h2>
@@ -216,7 +213,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Quick Actions */}
       <Card>
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>

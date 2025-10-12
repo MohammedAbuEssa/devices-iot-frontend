@@ -10,7 +10,6 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Initialize theme from localStorage immediately to prevent flash
   const getInitialTheme = (): ThemeType => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme') as ThemeType;
@@ -29,22 +28,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<ThemeType>(getInitialTheme);
   const [actualTheme, setActualTheme] = useState<'light' | 'dark'>(() => getInitialActualTheme(getInitialTheme()));
 
-  // Apply theme to document
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(actualTheme);
     console.log('Theme applied:', actualTheme, 'Classes:', root.className);
-  }, [actualTheme]); // Run when actualTheme changes
+  }, [actualTheme]);
 
   useEffect(() => {
-    // Save theme to localStorage
     localStorage.setItem('theme', theme);
   }, [theme]);
 
   useEffect(() => {
     if (theme === THEME_TYPES.AUTO) {
-      // Auto theme logic - could be enhanced to detect system preference
       setActualTheme('light');
     } else {
       setActualTheme(theme);

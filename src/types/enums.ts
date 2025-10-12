@@ -1,4 +1,3 @@
-// Device Types
 export const DEVICE_TYPES = {
   TEMPERATURE: "temperature",
   HUMIDITY: "humidity",
@@ -53,7 +52,6 @@ export const DEVICE_TYPE_ICONS = {
   VIBRATION: "mobile-alt"
 } as const;
 
-// Locations
 export const LOCATIONS = {
   LIVING_ROOM: "living_room",
   KITCHEN: "kitchen",
@@ -100,7 +98,6 @@ export const LOCATION_LABELS = {
   GUEST_ROOM: "Guest Room"
 } as const;
 
-// Device Status
 export const DEVICE_STATUS = {
   ACTIVE: "active",
   INACTIVE: "inactive",
@@ -125,7 +122,6 @@ export const DEVICE_STATUS_COLORS = {
   OFFLINE: "#6c757d"
 } as const;
 
-// Measurement Units
 export const MEASUREMENT_UNITS = {
   TEMPERATURE: "°C",
   HUMIDITY: "%",
@@ -144,7 +140,6 @@ export const MEASUREMENT_UNITS = {
   WINDOW_SENSOR: "open/closed"
 } as const;
 
-// Chart Types
 export const CHART_TYPES = {
   LINE: "line",
   BAR: "bar",
@@ -155,7 +150,6 @@ export const CHART_TYPES = {
   HEATMAP: "heatmap"
 } as const;
 
-// Time Ranges
 export const TIME_RANGES = {
   LAST_HOUR: "last_hour",
   LAST_6_HOURS: "last_6_hours",
@@ -178,7 +172,6 @@ export const TIME_RANGE_LABELS = {
   CUSTOM: "Custom Range"
 } as const;
 
-// Alert Severity
 export const ALERT_SEVERITY = {
   LOW: "low",
   MEDIUM: "medium",
@@ -200,7 +193,6 @@ export const ALERT_SEVERITY_COLORS = {
   CRITICAL: "#dc3545"
 } as const;
 
-// Notification Types
 export const NOTIFICATION_TYPES = {
   INFO: "info",
   SUCCESS: "success",
@@ -208,7 +200,6 @@ export const NOTIFICATION_TYPES = {
   ERROR: "error"
 } as const;
 
-// Widget Types
 export const WIDGET_TYPES = {
   CHART: "chart",
   METRIC: "metric",
@@ -218,14 +209,12 @@ export const WIDGET_TYPES = {
   MAP: "map"
 } as const;
 
-// API Status
 export const API_STATUS = {
   SUCCESS: "success",
   ERROR: "error",
   LOADING: "loading"
 } as const;
 
-// Sort Order
 export const SORT_ORDER = {
   ASC: "asc",
   DESC: "desc"
@@ -236,7 +225,6 @@ export const SORT_ORDER_LABELS = {
   DESC: "Descending"
 } as const;
 
-// Pagination Size
 export const PAGINATION_SIZE = {
   SMALL: 10,
   MEDIUM: 25,
@@ -251,14 +239,12 @@ export const PAGINATION_SIZE_LABELS = {
   EXTRA_LARGE: "100 per page"
 } as const;
 
-// Theme Types
 export const THEME_TYPES = {
   LIGHT: "light",
   DARK: "dark",
   AUTO: "auto"
 } as const;
 
-// Languages
 export const LANGUAGES = {
   EN: "en",
   ES: "es",
@@ -285,7 +271,6 @@ export const LANGUAGE_LABELS = {
   KO: "한국어"
 } as const;
 
-// Type definitions for better TypeScript support
 export type DeviceType = typeof DEVICE_TYPES[keyof typeof DEVICE_TYPES];
 export type DeviceTypeLabel = typeof DEVICE_TYPE_LABELS[keyof typeof DEVICE_TYPE_LABELS];
 export type DeviceTypeIcon = typeof DEVICE_TYPE_ICONS[keyof typeof DEVICE_TYPE_ICONS];
@@ -317,7 +302,6 @@ export type ThemeType = typeof THEME_TYPES[keyof typeof THEME_TYPES];
 export type Language = typeof LANGUAGES[keyof typeof LANGUAGES];
 export type LanguageLabel = typeof LANGUAGE_LABELS[keyof typeof LANGUAGE_LABELS];
 
-// Helper functions
 export const getDeviceTypeLabel = (type: string): string => {
   const key = Object.keys(DEVICE_TYPES).find(k => DEVICE_TYPES[k as keyof typeof DEVICE_TYPES] === type);
   return key ? DEVICE_TYPE_LABELS[key as keyof typeof DEVICE_TYPE_LABELS] : type;
